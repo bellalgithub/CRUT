@@ -34,7 +34,7 @@ exports.updateStudent = async (req, res) => {
         let data = await studentsModel.updateOne(query, reqBody);
         res.status(200).json({status: "Success", data: data});
     } catch (err) {
-        res.status(200).json({status: "Fail", data: err});
+        res.status(401).json({status: "Fail", data: err});
     }
 }
 

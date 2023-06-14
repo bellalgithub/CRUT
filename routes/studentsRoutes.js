@@ -1,13 +1,16 @@
 const express = require('express');
 const {InsertStudent, ReadStudent, updateStudent, deleteStudent} = require("../controllers/studentsController");
+const {tokenIssue} = require("../controllers/tokenIssueController");
+const {tokenVerify} = require("../middlewares/tokenVerifyMiddleware");
 
 const router = express.Router();
 
-//Routes
+//Routes, Apply JWT Auth
 
-router.post('/insertStudent', InsertStudent);
-router.get('/readStudent', ReadStudent);
-router.post('/updateStudent/:id', updateStudent);
-router.post('/deleteStudent/:id', deleteStudent);
+router.get('/tokenIssue', tokenIssue) //token create
+router.post('/insertStudent', tokenVerify, InsertStudent);
+router.get('/readStudent', tokenVerify, ReadStudent);
+router.post('/updateStudent/:id', tokenVerify, updateStudent);
+router.post('/deleteStudent/:id', tokenVerify, deleteStudent);
 
 module.exports = router;
